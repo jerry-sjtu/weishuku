@@ -19,6 +19,8 @@ class Book(models.Model):
     pubdate = models.CharField(max_length=45L, blank=True)
     ispublic = models.IntegerField(null=True, db_column='isPublic', blank=True) # Field name made lowercase.
     imgurl = models.CharField(max_length=128L, db_column='ImgURL', blank=True) # Field name made lowercase.
+    city = models.IntegerField()
+    bookcount = models.IntegerField()
     class Meta:
         db_table = 'Book'
 
@@ -37,3 +39,14 @@ class Borrowrel(models.Model):
     messageid = models.IntegerField(db_column='MessageID') # Field name made lowercase.
     class Meta:
         db_table = 'BorrowRel'
+
+class City(models.Model):
+    cityid = models.IntegerField(db_column='CityID', primary_key=True) # Field name made lowercase.
+    cityname = models.CharField(db_column='CityName', max_length=45, blank=True) # Field name made lowercase.
+    cityenname = models.CharField(db_column='CityEnName', max_length=45, blank=True) # Field name made lowercase.
+    cityabbrcode = models.CharField(db_column='CityAbbrCode', max_length=45, blank=True) # Field name made lowercase.
+    newcityabbrcode = models.CharField(db_column='NewCityAbbrCode', max_length=45, blank=True) # Field name made lowercase.
+    cityareacode = models.CharField(db_column='CityAreaCode', max_length=45, blank=True) # Field name made lowercase.
+    class Meta:
+        managed = False
+        db_table = 'City'
