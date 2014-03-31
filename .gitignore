@@ -1,0 +1,46 @@
+#ignore target under current directory and all subdirectories:
+target/ 
+*/target/
+test-output/
+*/test-output/
+
+#ignore settings & gitignore file
+.settings/
+*/.settings/
+.springBeans
+*/.springBeans
+
+#ignore svn files
+.svn
+*/.svn
+
+.project
+
+*/.project
+
+.classpath
+*/.classpath
+
+.data
+*/.data
+biz-server/data/
+
+#ignore sample fils
+sample/
+
+.idea
+*.iml
+
+#ignore searcher/logs
+searcher/logs/
+
+#ignore .DS_Store
+.DS_Store
+*/.DS_Store
+
+#ignore .pyc
+*.pyc
+
+*/session/
+*.log
+pid

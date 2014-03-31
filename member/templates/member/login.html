@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Bootstrap 101 Template</title>
+    <title>登录微书库</title>
     {% load staticfiles %}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
@@ -22,12 +22,15 @@
         {{ form.account.errors }}
         {{ form.password.errors }}
         {{ form.remember.errors }}
-        <h2 class="form-signin-heading">亲，我们又见面了！</h2>
+{#        <h2 class="form-signin-heading">微书库</h2>#}
+        <img src="{{STATIC_URL}}image/wsk.png">
         <input id="id_account" name="account" type="text" class="form-control" placeholder="邮件地址" required autofocus>
         <input id="id_password" name="password" type="password" class="form-control" placeholder="密码" required>
         <label class="checkbox">
           <input id="id_remember" type="checkbox" value="remember-me"> 记住我
+          <a href="/member/register">点击注册</a>
         </label>
+
         <input type="hidden" id="id_next" name="next" value="{{next}}">
         <button class="btn btn-lg btn-primary btn-block" type="submit">登陆</button>
       </form>

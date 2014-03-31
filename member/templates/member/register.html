@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Bootstrap 101 Template</title>
+    <title>注册微书库</title>
     {% load staticfiles %}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
@@ -19,13 +19,13 @@
   <body>
     <div class="container">
       <form action="/member/register/" method="post" class="form-signin"> {% csrf_token %}
-        <h2 class="form-signin-heading">注册好处多多！</h2>
+        <h3 class="form-signin-heading">感谢您注册微书库</h3>
         <input id="id_account" name="account" type="text" class="form-control" placeholder="邮件地址" required autofocus>
         <input id="id_password" name="password" type="password" class="form-control" placeholder="密码" required>
         <input id="id_repeat_password" name="repeat_password" type="password" class="form-control" placeholder="重复密码" required>
         <font color="red" size=5> {{ form.non_field_errors }} </font>
         <label class="checkbox">
-          <input id="id_remember" type="checkbox" value="remember-me"> 记住我
+          <input id="id_remember" type="checkbox" value="remember-me"><a href="">同意微书库守则</a>
         </label>
         <button class="btn btn-lg btn-primary btn-block" type="submit">注册</button>
       </form>
