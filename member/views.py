@@ -6,6 +6,7 @@ from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required
 
 from member.forms import LoginForm, RegisterForm
+from member.models import Dper
 
 
 
@@ -52,7 +53,9 @@ def register(request):
             remember = form.cleaned_data['remember']
             user = User.objects.create_user(username=account, password=password)
             user = authenticate(username=account, password=password)
+            dper = Dper.objects.create(user=user, city=1, department='QA', phone='123456789', sex=0)
             if user is not None:
+                dper.save()
                 login(request, user)
             return redirect('/', context)
         else:

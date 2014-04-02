@@ -12,15 +12,8 @@ class Dper(models.Model):
     city = models.IntegerField()
     department = models.CharField(max_length=50, null=True, default='')
 
+    class Meta:
+        db_table = 'Dper'
 
-def create_user_profile(user, **kwargs):
-    dper = Dper()
-    dper.user = user
-    dper.city = kwargs['city']
-    dper.sex = kwargs['sex']
-    dper.phone = kwargs['phone']
-    dper.department = kwargs['department']
-    dper.save()
-
-
-post_save.connect(create_user_profile, sender=User)
+    def __unicode__(self):
+        return self.user.username
