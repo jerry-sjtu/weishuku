@@ -19,9 +19,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'WeiShuKu',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
-        'USER': 'weishuku',
-        'PASSWORD': 'kushuwei',
-        'HOST': '127.0.0.1',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': '192.168.8.98',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
         'PORT': '3306',                      # Set to empty string for default.
     }
 }
@@ -136,6 +136,8 @@ INSTALLED_APPS = (
 
 #login URL
 LOGIN_URL = '/member/login/'
+
+AUTH_PROFILE_MODULE='member.Dper'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
