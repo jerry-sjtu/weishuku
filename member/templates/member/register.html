@@ -26,15 +26,17 @@
         <input id="id_repeat_password" name="repeat_password" type="password" class="form-control" placeholder="重复密码"
                required>
         <input id="id_email" name="email" type="text" class="form-control" placeholder="邮箱" required>
-        <select id="filter-menu" data-native-menu="false">
-            <option value="shanghai">上海</option>
-            <option value="beijing">北京</option>
-            <option value="guangzhou">广州</option>
-            <option value="shenzhen">深圳</option>
+        <input id="id_department" name="department" type="text" class="form-control" placeholder="部门(选填)">
+        <input id="id_phone" name="phone" type="text" class="form-control" placeholder="手机(选填)">
+        <select id="id_city" name="city" >
+            <option value="1">上海</option>
+            <option value="2">北京</option>
+            <option value="3">广州</option>
+            <option value="4">深圳</option>
         </select>
-        <select>
-            <option value="shanghai">男</option>
-            <option value="beijing">女</option>
+        <select id="id_sex" name="sex">
+            <option value="1">男</option>
+            <option value="0">女</option>
         </select>
         <font color="red" size=5> {{ form.non_field_errors }} </font>
         <label class="checkbox">
