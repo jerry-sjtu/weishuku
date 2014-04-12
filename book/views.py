@@ -175,8 +175,6 @@ def return_book(request, id):
     q[0].delete()
     return redirect('/book/library/')
 
-def get_book_bytag(tag):
-    boos_list = Book.objects.fi
 
 
 

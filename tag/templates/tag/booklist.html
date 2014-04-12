@@ -12,12 +12,12 @@
             </div>
 
         </form>
-          
+
         </p>
       </div>
 
         <div>
-            <h2>达人推荐</h2>
+            <h2>符合条件的书</h2>
             <ul data-role="listview">
                 {% for book in book_list %}
                 <li>
@@ -31,16 +31,6 @@
                 {% endfor %}
             </ul>
         </div>
-
-        <div class="col-md-4">
-          <h2>热门标签</h2>
-          {% for item in tag_list %}
-           <div style="float: left;margin: 2px 2px 3px 4px">
-            <a class="btn btn-sm btn-primary" style="line-height: 1.5;"  role="button" href="/tag/tb/{{ item.id}}">{{ item.value }} </a>
-           </div>
-          {% endfor %}
-       </div>
-      </div>
 
 {% endblock %}
 
