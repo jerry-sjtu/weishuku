@@ -36,7 +36,7 @@
           <h2>热门标签</h2>
           {% for item in tag_list %}
            <div style="float: left;margin: 2px 2px 3px 4px">
-            <a class="btn btn-sm btn-primary" style="line-height: 1.5;"  role="button">{{ item }} </a>
+            <a class="btn btn-sm btn-primary" style="line-height: 1.5;"  role="button" href="/book/{{ item.id}} }}">{{ item.value }} </a>
            </div>
           {% endfor %}
        </div>

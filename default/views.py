@@ -16,7 +16,7 @@ def index(request):
     #tag_list = list()
     #for item in tag_data['results']:
     #    tag_list.append(item['name'])
-    context['tag_list'] = [tag.value for tag in Tag.objects.all()][0:10]
+    context['tag_list'] = [tag for tag in Tag.objects.all()][0:10]
     is_login = request.user.is_authenticated()
     context['is_login'] = is_login
     if is_login:
