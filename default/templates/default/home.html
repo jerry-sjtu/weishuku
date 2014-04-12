@@ -3,34 +3,42 @@
 {% load staticfiles %}
 {% block content %}
       <div class="jumbotron">
-        <b><font size="16">心在远方，书在身边</font></b>
+        <big>心在远方，书在身边</big>
         <form>
-          <input class="span2" type="text" maxlength="20" style="width:550px;" 
-                placeholder="感兴趣的作者，书和小组">
-          <a class="btn btn-lg btn-primary" style="line-height: 1.5;"  role="button">搜索</a>
+            <div>
+              <input class="span2" type="text" maxlength="20" style="width:60%;"
+                    placeholder="感兴趣的">
+              <a class="btn btn-lg btn-primary" style="line-height: 1.5;"  role="button">搜索</a>
+            </div>
+
         </form>
           
         </p>
       </div>
 
-        <div class="col-md-8">
+        <div>
             <h2>达人推荐</h2>
-            {% for book in book_list %}
-            <div class="col-md-3 libray_book">
-              <a href="/book/{{ book.id }}">
-                <img src="{{book.imgurl}}" class="img-polaroid book_img"> </img>
-                <h4>{{ book.title }} </h4>
-              </a>
-            </div>
-           {% endfor %}
+            <ul data-role="listview">
+                {% for book in book_list %}
+                <li>
+                    <a href="/book/{{ book.id }}">
+                        <img src="{{book.imgurl}}" class="img-polaroid book_img"> </img>
+                        <h5>{{ book.title }} </h5>
+                        <h5>拥有者:{{ book.username }} </h5>
+                        <h5>位置:{{ book.position }}</h5>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
         </div>
 
         <div class="col-md-4">
           <h2>热门标签</h2>
           {% for item in tag_list %}
-            {{ item }} </br>
+           <div style="float: left;margin: 2px 2px 3px 4px">
+            <a class="btn btn-sm btn-primary" style="line-height: 1.5;"  role="button">{{ item }} </a>
+           </div>
           {% endfor %}
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
        </div>
       </div>
 
