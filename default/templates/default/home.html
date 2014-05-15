@@ -9,12 +9,11 @@
             $.ajax({
                 type: 'GET',
                 url: "/book/search_book/" + keyword,
-                success: function(rValue){
-                    alert(rValue);
+                success: function(rlist){
+                    $("#book_list").html(rlist);
                 }
             });
         }
-
     </script>
       <div class="jumbotron">
         <big>心在远方，书在身边</big>
@@ -30,9 +29,10 @@
         </p>
       </div>
 
-        <div class="col-md-8">
+        <div class="col-md-10">
+        <div class="col-md-10">
             <h2>图书广场</h2>
-            <ul data-role="listview">
+            <ul id="book_list" data-role="listview" >
                 {% for book in book_list %}
                 <div class="col-md-3 libray_book">
                     <a href="/book/{{ book.id }}">
@@ -41,10 +41,25 @@
                         <h5>拥有者:{{ book.username }}</h5>
                         <h5>位置:{{ book.position }}</h5>
                     </a>
-
                 </div>
                 {% endfor %}
             </ul>
+        </div>
+        <div id="pagination" class="pagination col-md-9">
+                <span class="step-links">
+                    {% if book_list.has_previous %}
+                        <a href="/page/{{ book_list.previous_page_number }}">previous</a>
+                    {% endif %}
+
+                    <span class="current">
+                        Page {{ book_list.number }} of {{ book_list.paginator.num_pages }}.
+                    </span>
+
+                    {% if book_list.has_next %}
+                        <a href="/page/{{ book_list.next_page_number }}">next</a>
+                    {% endif %}
+                </span>
+            </div>
         </div>
 
         <div class="col-md-4 tags-hot">

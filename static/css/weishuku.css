@@ -23,3 +23,13 @@ a.btn-search-own:hover,.tags-hot a:hover{
         display: none;
     }
 }
+
+/*Optional for Delicious #pagination{text-align:center;clear:both;margin:0 0 .5em 0;padding:2.5em 0 1em 0;border-top:1px solid #DDD;}*/
+#pagination{clear:both;margin:0 0 .5em 0;padding:2.5em 0 1em 0;}
+#pagination a{border:1px solid #999;text-decoration:none;background:white;color:#0066CC}
+#pagination a:hover{background:#3774D0;color:white;}
+#pagination a,#pagination span{padding:0.3em 0.5em;}
+#pagination a.pn{border:1px solid #fff;}
+#pagination a.pn b{font-weight:normal;}
+#pagination a.pn:hover{border:1px solid #999;}
+#pagination p{color:#999;}

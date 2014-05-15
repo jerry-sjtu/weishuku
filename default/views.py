@@ -9,8 +9,8 @@ from member.models import Dper
 from tag.models import Tag
 from message.models import Message
 from django.contrib.auth.models import User
-
-def index(request):
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+def index_page(request, page):
     context = dict()
     #tag_data = json.load(urllib2.urlopen('http://192.168.8.103:27080/weishuku/booktag/_find'))
     #tag_list = list()
@@ -28,6 +28,9 @@ def index(request):
         department = Dper.objects.filter(id=b.ownerid)[0].department
         b.username = name
         b.position = department
-    context['book_list'] = book_list
+    book_list = Paginator(book_list, 3)
+    context['book_list'] = book_list.page(int(page))
     return render(request, 'default/home.html', context)
 
+def index(request):
+    return index_page(request, 1)

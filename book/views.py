@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 from django.shortcuts import render, redirect
@@ -14,6 +15,7 @@ import datetime
 
 from book.models import Book, Borrowrel
 from book.forms import BookForm
+from member.models import Dper
 from tag.models import Tag, Booktag
 from message.models import Message
 from url_tool import parse_book_by_isbn
@@ -184,6 +186,24 @@ def search_book(request, keyword):
     book_list = Book.objects.filter(
         Q(title__contains=keyword) | Q(author__contains=keyword),
     )
-    r_list = [(b.title, b.author, b.ownerid)for b in book_list]
-    return HttpResponse(json.dumps(r_list), content_type='application/json')
+    html_list = format_book_list(book_list)
+    return HttpResponse(html_list, content_type='application/html')
 
+
+def format_book_list(book_list):
+    base_html = u'''
+                <div class="col-md-3 libray_book">
+                    <a href="/book/%s">
+                        <img src="%s" class="img-polaroid book_img">
+                        <h4>%s</h4>
+                        <h5>拥有者:%s</h5>
+                        <h5>位置:%s</h5>
+                    </a>
+                </div>
+    '''
+    html_list = ""
+    for book in book_list:
+        user = User.objects.filter(id=book.ownerid)
+        dper = Dper.objects.filter(id=book.ownerid)
+        html_list += base_html % (book.id, book.imgurl, book.title, user[0].username, dper[0].department)
+    return html_list
