@@ -6,6 +6,8 @@ from django.shortcuts import render, redirect
 from django.views.decorators.cache import cache_page
 from django import forms
 from django.conf import settings
+import json
+from django.db.models import Q
 
 import json
 import datetime
@@ -177,5 +179,11 @@ def return_book(request, id):
 
 
 
-
+def search_book(request, keyword):
+    print 'keyword:%s' % keyword
+    book_list = Book.objects.filter(
+        Q(title__contains=keyword) | Q(author__contains=keyword),
+    )
+    r_list = [(b.title, b.author, b.ownerid)for b in book_list]
+    return HttpResponse(json.dumps(r_list), content_type='application/json')
 

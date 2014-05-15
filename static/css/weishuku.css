@@ -1,0 +1,25 @@
+.copyright{
+    text-align: center;
+    padding: 0px 0px 16px;
+}
+a.btn-search-own,.tags-hot a,.tags-hot a:visited{
+    color: #eee;
+    text-shadow: 1px 1px #555;
+}
+a.btn-search-own:hover,.tags-hot a:hover{
+    color: #fff;
+}
+.form-signin input.register-password{
+    margin-bottom: 0px;
+    border-radius: 0px;
+    border-bottom: 0 none;
+}
+.home-search-input{
+    height: 48px;
+    vertical-align: middle;
+}
+@media screen and (min-width:1024px){
+	.mobile-nav-toggle-btn{
+        display: none;
+    }
+}

@@ -8,6 +8,7 @@
     <link href="{{STATIC_URL}}css/bootstrap.min.css" rel="stylesheet">
     <link href="{{STATIC_URL}}css/extension.css" rel="stylesheet">
     <link rel="stylesheet" href="{{STATIC_URL}}css/jquery.mobile-1.4.1.min.css">
+    <link href="{{STATIC_URL}}css/weishuku.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -23,7 +24,7 @@
       <!-- Static navbar -->
       <div class="navbar navbar-default" role="navigation">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <button type="button" class="navbar-toggle mobile-nav-toggle-btn" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -59,7 +60,7 @@
             <li><a href="{% url 'member:logout' %}">注销</a></li>
             {% else %}
             <li class="active"><a href="{% url 'member:login' %}">登陆</a></li>
-            <li><a href="{% url 'member:register' %}">注册</a></li>
+            <li><a href="javascript:window.location.href='{% url 'member:register' %}'">注册</a></li>
             {% endif %}
           </ul>
         </div><!--/.nav-collapse -->
@@ -69,7 +70,7 @@
           {% block content %} {% endblock %}
         </div>
 
-        <div id="footer" class="col-md-12">
+        <div id="footer" class="col-md-12 copyright">
             <hr>
             © 2005－2013 nianyike.com, all rights reserved
         </div>
@@ -78,7 +79,7 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="{{STATIC_URL}}js/jquery-1.10.2.min.js"></script>
     <script src="{{STATIC_URL}}js/bootstrap.min.js"></script>
-	<script src="{{STATIC_URL}}js/jquery.mobile-1.4.1.min.js"></script>
+	<!--<script src="{{STATIC_URL}}js/jquery.mobile-1.4.1.min.js"></script>-->
 
   </body>
 </html>
