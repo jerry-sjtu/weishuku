@@ -55,7 +55,7 @@ def register(request):
             phone = form.cleaned_data['phone']
 
             department = form.cleaned_data['department']
-            city = form.cleaned_data['city']
+            city = form.cleaned_data['city_list']
             sex = form.cleaned_data['sex']
             user = User.objects.create_user(username=account, password=password)
             user = authenticate(username=account, password=password)

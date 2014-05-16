@@ -11,4 +11,5 @@ urlpatterns = patterns('',
     url(r'^approve_borrow/(?P<bookid>\d+)/$', views.approve_borrow, name='approve_borrow'),
     url(r'^refuse_borrow/(?P<bookid>\d+)/$', views.refuse_borrow, name='refuse_borrow'),
     url(r'^return/(?P<id>\d+)/$', views.return_book, name='return_book'),
+    url(r'^search_book/(?P<keyword>.*)/$', views.search_book, name='search_book'),
 )

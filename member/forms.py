@@ -2,6 +2,7 @@
 from django import forms
 import re
 from django.contrib.auth.models import User
+from member.models import City
 
 
 def is_email(email):
@@ -27,10 +28,12 @@ class RegisterForm(forms.Form):
     repeat_password = forms.CharField(max_length=100)
     remember = forms.BooleanField(required=False)
     department = forms.CharField(max_length=100, required=False)
-    city = forms.IntegerField()
+    city_obj = City()
+    city_list = forms.ChoiceField(city_obj.all_cities())
     sex = forms.IntegerField()
     phone = forms.CharField(max_length=100, required=False)
     email = forms.CharField(max_length=100)
+
 
     def clean(self):
         cleaned_data = super(RegisterForm, self).clean()

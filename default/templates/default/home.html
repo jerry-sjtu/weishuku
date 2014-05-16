@@ -2,13 +2,26 @@
 {% extends 'default/base.html' %}
 {% load staticfiles %}
 {% block content %}
+    <script type="application/javascript">
+        function searchKeyword()
+        {
+            var keyword = $('#searchKeyword').val();
+            $.ajax({
+                type: 'GET',
+                url: "/book/search_book/" + keyword,
+                success: function(rlist){
+                    $("#book_list").html(rlist);
+                }
+            });
+        }
+    </script>
       <div class="jumbotron">
         <big>心在远方，书在身边</big>
         <form>
             <div>
-              <input class="span2" type="text" maxlength="20" style="width:60%;"
+              <input id="searchKeyword" class="span2 home-search-input" type="text" maxlength="20" style="width:60%;"
                     placeholder="感兴趣的">
-              <a class="btn btn-lg btn-primary" style="line-height: 1.5;"  role="button">搜索</a>
+              <a class="btn btn-lg btn-primary btn-search-own" style="line-height: 1.5;" onclick="searchKeyword()"  role="button">搜索</a>
             </div>
 
         </form>
@@ -16,23 +29,40 @@
         </p>
       </div>
 
-        <div>
-            <h2>达人推荐</h2>
-            <ul data-role="listview">
+        <div class="col-md-10">
+        <div class="col-md-10">
+            <h2>图书广场</h2>
+            <ul id="book_list" data-role="listview" >
                 {% for book in book_list %}
-                <li>
+                <div class="col-md-3 libray_book">
                     <a href="/book/{{ book.id }}">
-                        <img src="{{book.imgurl}}" class="img-polaroid book_img"> </img>
-                        <h5>{{ book.title }} </h5>
-                        <h5>拥有者:{{ book.username }} </h5>
+                        <img src="{{book.imgurl}}" class="img-polaroid book_img">
+                        <h4>{{ book.title }}</h4>
+                        <h5>拥有者:{{ book.username }}</h5>
                         <h5>位置:{{ book.position }}</h5>
                     </a>
-                </li>
+                </div>
                 {% endfor %}
             </ul>
         </div>
+        <div id="pagination" class="pagination col-md-9">
+                <span class="step-links">
+                    {% if book_list.has_previous %}
+                        <a href="/page/{{ book_list.previous_page_number }}">previous</a>
+                    {% endif %}
 
-        <div class="col-md-4">
+                    <span class="current">
+                        Page {{ book_list.number }} of {{ book_list.paginator.num_pages }}.
+                    </span>
+
+                    {% if book_list.has_next %}
+                        <a href="/page/{{ book_list.next_page_number }}">next</a>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+
+        <div class="col-md-4 tags-hot">
           <h2>热门标签</h2>
           {% for item in tag_list %}
            <div style="float: left;margin: 2px 2px 3px 4px">
