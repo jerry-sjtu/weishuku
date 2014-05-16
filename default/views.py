@@ -25,7 +25,10 @@ def index_page(request, page):
     book_list = [book for book in Book.objects.all()]
     for b in book_list:
         name = User.objects.filter(id=b.ownerid)[0].username
-        department = Dper.objects.filter(id=b.ownerid)[0].department
+        dpers = [d for d in Dper.objects.filter(id=b.ownerid)]
+        department = ''
+        if len(dpers) > 0:
+            department = dpers[0].department
         b.username = name
         b.position = department
     book_list = Paginator(book_list, 3)
