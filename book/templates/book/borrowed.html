@@ -1,0 +1,52 @@
+
+{% extends 'default/base.html' %}
+{% load staticfiles %}
+{% block content %}
+        {% if borrow_num > 0 %}
+        <div class="col-md-8">
+          <div class="col-md-7"> <font size=5> <b>我借到的书</b> </font>  </div>
+
+          <div class="col-md-12"> <hr/></div>
+          
+          {% for book in borrow_list %}
+            <div class="col-md-3 libray_book">
+              <a href="/book/{{ book.id }}">
+                <img src="{{book.imgurl}}" class="img-polaroid book_img"> </img>
+                <h4>{{ book.title }} </h4>
+              </a>
+              <h4>拥有者：{{ book.username }} </h4>
+              <h4>申请时间：{{ book.createtime }} </h4>
+
+            <div class="col-md-1">
+              {% if book.status == 0 %}
+                <a href="#" class="btn btn-sm btn-info"  role="button">等待消息</a>
+              {% elif book.status == 1 %}
+                <a href="#" class="btn btn-sm btn-info"  role="button">哎，不借！</a>
+                <h4>拒绝时间：{{ book.updatetime }} </h4>
+              {% else %}
+                <a href="/book/return/{{book.id}}" class="btn btn-sm btn-info"  role="button">去还书》</a>
+                <h4>同意时间：{{ book.agreetime }} </h4>
+              {% endif %}
+          </div>
+            </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+                <div id="pagination" class="pagination col-md-9">
+                <span class="step-links">
+                    {% if borrow_list.has_previous %}
+                        <a href="/book/borrowed/page/{{ borrow_list.previous_page_number }}/">previous</a>
+                    {% endif %}
+
+                    <span class="current">
+                        Page {{ borrow_list.number }} of {{ borrow_list.paginator.num_pages }}.
+                    </span>
+
+                    {% if borrow_list.has_next %}
+                        <a href="/book/borrowed/page/{{ borrow_list.next_page_number }}/">next</a>
+                    {% endif %}
+                </span>
+            </div>
+
+{% endblock %}
+

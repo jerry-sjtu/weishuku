@@ -38,7 +38,9 @@
               <a href="#" class="dropdown-toggle active" data-toggle="dropdown">我的书库<b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="{% url 'book:library' %}">拥有的书</a></li>
-                <li><a href="#">借到的书</a></li>
+                <li><a href="{% url 'book:borrowed' %}">借到的书</a></li>
+                <li><a href="{% url 'book:apply' %}">收到的申请</a></li>
+                <li><a href="{% url 'book:history' %}">借阅历史</a></li>
                 <li><a href="#">关注的书</a></li>
                 <li class="divider"></li>
               </ul>

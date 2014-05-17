@@ -37,6 +37,8 @@ class Borrowrel(models.Model):
     createdate = models.DateTimeField(db_column='CreateDate') # Field name made lowercase.
     deldate = models.DateTimeField(db_column='DelDate') # Field name made lowercase.
     messageid = models.IntegerField(db_column='MessageID') # Field name made lowercase.
+    agreedate = models.DateTimeField(db_column='AgreeDate', blank=True, null=True) # Field name made lowercase.
+    updatedate = models.DateTimeField(db_column='UpdateDate', blank=True, null=True) # Field name made lowercase.
     class Meta:
         db_table = 'BorrowRel'
 
