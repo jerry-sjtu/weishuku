@@ -6,7 +6,8 @@ from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required
 
 from member.forms import LoginForm, RegisterForm
-from member.models import Dper
+from member.models import Dper, City, Province, CityArea
+import json
 
 
 
@@ -71,3 +72,20 @@ def register(request):
         context['form'] = RegisterForm()
         return render(request, 'member/register.html', context)
 
+
+def city_list_with_region(request):
+    area_obj = CityArea()
+    area_d = dict()
+    q = City.objects.filter(citylevel__in=[1,2,3])
+    for item in q:
+        try:
+            area_name = area_obj.get_area(item.province.areaid)
+            if area_name not in area_d:
+                area_d[area_name] = list()
+            area_d[area_name].append((item.cityid, item.cityenname, item.cityname))
+        except Province.DoesNotExist:
+            pass
+    #return HttpResponse(json.dumps(area_d), content_type="application/json")
+    context = dict()
+    context['area_d'] = area_d
+    return render(request, 'member/citylist.html', context)

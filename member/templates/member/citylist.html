@@ -1,0 +1,12 @@
+<div class="list-group">
+{% for key, value in area_d.items %}
+  <div class="list-group-item active">
+    {{key}}
+  </div>
+  <div class="list-group-item">
+    {% for item in value %}
+    <a href="{{item.1}}" >{{item.2}}</a>
+    {% endfor %}
+  </div>
+{% endfor %}
+</div>
