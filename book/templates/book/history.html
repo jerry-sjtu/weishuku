@@ -5,7 +5,10 @@
         {% if history_num > 0 %}
         <div class="col-md-8">
           <div class="col-md-7"> <font size=5> <b>借阅历史</b> </font>  </div>
-
+           <div class="col-md-3">
+{#            <a href="{% url 'book:addbook' %}" class="btn btn-sm btn-info"  role="button">去催书》#}
+              <font size="5" >共计：</font> <font size='4' color="#dc143c">{{  history_num }}</font>
+          </div>
           <div class="col-md-12"> <hr/></div>
 
           {% for book in history_list %}
@@ -14,26 +17,28 @@
                 <img src="{{book.imgurl}}" class="img-polaroid book_img"> </img>
                 <h4>{{ book.title }} </h4>
               </a>
-            <h4>拥有者：{{ book.username }} </h4>
-            <h4>申请时间：{{ book.createtime }} </h4>
-
-              <div class="col-md-1">
+              <div>
+                    拥有者：<font size="5" color="#8b0000">{{ book.username }} </font><br>
+                    申请时间：<br> <font sieze = '5' color="#8b0000">{{ book.createtime }} </font><br>
               {% if book.status == 0 %}
                 <a href="#" class="btn btn-sm btn-info"  role="button">等待消息</a>
               {% elif book.status == 1 %}
                 <a href=#" class="btn btn-sm btn-info"  role="button">拒借</a>
-                <h4>拒绝时间：{{ book.updatetime }} </h4>
+                拒绝时间：<br> <font sieze = '5' color="#8b0000">{{ book.updatetime }} </font>
               {% elif book.status == 2 %}
                 <a href="#" class="btn btn-sm btn-info"  role="button">借阅成功</a>
-                <h4>同意时间：{{ book.agreetime }} </h4>
+                同意时间：<br> <font sieze = '5' color="#8b0000">{{ book.agreetime }} </font>
               {% elif book.status == 4 %}
+                同意时间：<br> <font sieze = '5' color="#8b0000">{{ book.agreetime }} </font>
+                归还时间：<br> <font sieze = '5' color="#8b0000">{{ book.updatetime }} </font>
                 <a href="#" class="btn btn-sm btn-info"  role="button">已经归还</a>
-                <h4>同意时间：{{ book.agreetime }} </h4>
-                <h4>归还时间：{{ book.updatetime }} </h4>
+
               {% else %}
                 <a href="#" class="btn btn-sm btn-info"  role="button">丢了</a>
               {% endif %}
-          </div>
+              </div>
+              <br>
+
             </div>
           {% endfor %}
         </div>
@@ -54,8 +59,5 @@
                 </span>
             </div>
         </div>
-
-
-
 {% endblock %}
 

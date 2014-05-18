@@ -5,7 +5,10 @@
         {% if borrow_num > 0 %}
         <div class="col-md-8">
           <div class="col-md-7"> <font size=5> <b>我借到的书</b> </font>  </div>
-
+           <div class="col-md-3">
+{#            <a href="{% url 'book:addbook' %}" class="btn btn-sm btn-info"  role="button">去催书》#}
+              <font size="5" >共计：</font> <font size='4' color="#dc143c">{{  borrow_num }}</font>
+          </div>
           <div class="col-md-12"> <hr/></div>
           
           {% for book in borrow_list %}
@@ -14,8 +17,11 @@
                 <img src="{{book.imgurl}}" class="img-polaroid book_img"> </img>
                 <h4>{{ book.title }} </h4>
               </a>
-              <h4>拥有者：{{ book.username }} </h4>
-              <h4>申请时间：{{ book.createtime }} </h4>
+                <div>
+                    拥有者：<font size="5" color="#8b0000">{{ book.username }} </font><br>
+                    申请时间：<br> <font sieze = '5' color="#8b0000">{{ book.createtime }} </font>
+                </div>
+            <br>
 
             <div class="col-md-1">
               {% if book.status == 0 %}

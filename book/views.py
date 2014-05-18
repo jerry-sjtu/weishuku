@@ -34,7 +34,8 @@ def book_list(request):
 @login_required
 def library_page(request, page):
     context = dict()
-    q = Book.objects.filter(ownerid=request.user.id)
+    # sortfield = ('status')
+    q = Book.objects.filter(ownerid=request.user.id).order_by('-status')
     book_list = [item for item in q]
 
 
@@ -61,10 +62,13 @@ def library_borrowed(request, page):
         # dpers = [d for d in Dper.objects.filter(id=book.ownerid)]
         book.username = name
         book.createtime = rel.createdate
+        # print book.createtime
         book.updatetime = rel.updatedate
         book.agreetime = rel.agreedate
         borrow_list.append(book)
-
+    context['username'] = request.user.username
+    context['is_login'] = request.user.is_authenticated()
+    context['msg_num'] = Message.objects.filter(targetid=request.user.id, status=0).count()
     context['borrow_num'] = len(borrow_list)
     borrow_list = Paginator(borrow_list, 3)
     context['borrow_list'] = borrow_list.page(int(page))
@@ -86,6 +90,9 @@ def libray_applied(request, page):
         book.createtime = rel.createdate
         book.updatetime = rel.updatedate
         apply_list.append(book)
+    context['username'] = request.user.username
+    context['is_login'] = request.user.is_authenticated()
+    context['msg_num'] = Message.objects.filter(targetid=request.user.id, status=0).count()
     context['apply_num'] = len(apply_list)
     apply_list = Paginator(apply_list, 3)
     context['apply_list'] = apply_list.page(int(page))
@@ -109,6 +116,9 @@ def history_page(request, page):
         book.agreetime = rel.agreedate
         book.updatetime = rel.updatedate
         history_list.append(book)
+    context['username'] = request.user.username
+    context['is_login'] = request.user.is_authenticated()
+    context['msg_num'] = Message.objects.filter(targetid=request.user.id, status=0).count()
     context['history_num'] = len(history_list)
     history_list = Paginator(history_list, 3)
     context['history_list'] = history_list.page(int(page))
@@ -143,6 +153,9 @@ def add_book(request):
             book.created_date = datetime.datetime.now()
             book.updated_date = datetime.datetime.now()
             book.author = context['author'][0]
+            book.authorinfo = context['author_intro']
+            # print book.authorinfo
+            book.catelog = context['catalog']
             book.pubdate = context['pubdate']
             book.ispublic = int(True)
             book.imgurl = context['images']
@@ -173,6 +186,9 @@ def info_book(request, id):
     if request.user.is_authenticated():
         context['username'] = request.user.username
     book = Book.objects.filter(id=id)[0]
+    print book.authorinfo
+    if len(book.url) > 0:
+        book.douurl = "http://book.douban.com/subject/"+book.url.split('/')[-1]
     context['book'] = book
     context['userid'] = request.user.id
     context['is_own'] = (book.ownerid == request.user.id)
@@ -183,9 +199,37 @@ def info_book(request, id):
     return render(request, 'book/detail.html', context)
 
 @login_required
-def del_book(request):
-    pass
-    
+def del_book(request, bookid):
+    context = dict()
+    userid = request.user.id
+    Book.objects.filter(ownerid=userid, id=bookid).update(status=0)
+    return render(request, 'book/library.html', context)
+
+@login_required
+def del_all(request):
+    context = dict()
+    userid = request.user.id
+    delcount = Book.objects.filter(ownerid=userid).update(status=0)
+    context['delcount'] = delcount
+    # print delcount
+    return render(request, 'book/library.html', context)
+
+@login_required
+def recover_book(request, bookid):
+    context = dict()
+    userid = request.user.id
+    Book.objects.filter(ownerid=userid, id=bookid, status=0).update(status=1)
+    return render(request, 'book/library.html', context)
+
+@login_required
+def recover_all(request):
+    context = dict()
+    userid = request.user.id
+    recover = Book.objects.filter(ownerid=userid, status=0).update(status=1)
+    context['recover'] = recover
+    # print recover
+    return render(request, 'book/library.html', context)
+
 @login_required
 def update_book(request):
     pass

@@ -8,15 +8,18 @@
         {% else %}
         <div class="col-md-8">
           <div class="col-md-7"> <font size=5> <b>我的书库 </b> </font>  </div>
-          <div class="col-md-1">
-            <a href="{% url 'book:addbook' %}" class="btn btn-sm btn-info"  role="button">添加更多书籍》
-            </a>
+          <div class="col-md-2 ">
+            <a href="{% url 'book:delall' %}" class="btn btn-sm btn-info"  role="button">全部下架></a>
+          </div>
+          <div class="col-md-2">
+            <a href="{% url 'book:addbook' %}" class="btn btn-sm btn-info"  role="button">添加更多></a>
           </div>
 
+
           <div class="col-md-12"> <hr/></div>
-          
+
           {% for book in book_list %}
-            <div class="col-md-3 libray_book">
+            <div id='mybook' class="col-md-3 libray_book">
               <a href="/book/{{ book.id }}">
                 <img src="{{book.imgurl}}" class="img-polaroid book_img"> </img>
                 <h4>{{ book.title }} </h4>
@@ -40,5 +43,7 @@
                     {% endif %}
                 </span>
             </div>
+
 {% endblock %}
+
 

@@ -15,7 +15,7 @@
             <div> 页数：{{ book.pages }}  </div>
             <div> 价格：{{ book.price }}   </div>
             <div> ISBN：{{ book.isbn }}   </div>
-            <div> 豆瓣URL：{{ book.url }}   </div>
+            <div> 豆瓣URL：<a href="{{ book.douurl }}" target="_blank">猛戳</a> </div>
         </div>
         <div class="col-md-3">
             <div id="inner_rating">
@@ -62,8 +62,8 @@
             <!-- Tab panes -->
             <div class="tab-content">
               <div class="tab-pane fade in active" id="summary">{{book.summary}}</div>
-              <div class="tab-pane fade" id="author">{{book.author_intro}}</div>
-              <div class="tab-pane fade" id="catalog">{{book.catalog}}</div>
+              <div class="tab-pane fade" id="author">{{book.authorinfo}}</div>
+              <div class="tab-pane fade" id="catalog">{{book.catelog}}</div>
             </div>
         </div>
         <div class="col-md-8">

@@ -5,9 +5,9 @@
         {% if apply_num > 0 %}
         <div class="col-md-8">
           <div class="col-md-7"> <font size=5> <b>我收到的申请</b> </font>  </div>
-          <div class="col-md-1">
-            <a href="{% url 'book:addbook' %}" class="btn btn-sm btn-info"  role="button">去催书》
-            </a>
+          <div class="col-md-3">
+{#            <a href="{% url 'book:addbook' %}" class="btn btn-sm btn-info"  role="button">去催书》#}
+              <font size="5" >共计：</font> <font size='4' color="#dc143c">{{  apply_num }}</font>
           </div>
 
           <div class="col-md-12"> <hr/></div>
@@ -18,15 +18,15 @@
                 <img src="{{book.imgurl}}" class="img-polaroid book_img"> </img>
                 <h4>{{ book.title }} </h4>
             </a>
-                <h4>申请时间：{{ book.createtime }} </h4>
+                申请时间：<br> <font sieze = '5' color="#8b0000">{{ book.createtime }} </font><br>
 
               {% if book.status == 0 %}
               <a href="/book/approve_borrow/{{book.id}}" class="btn btn-sm btn-info">同意</a>
               <a href="/book/refuse_borrow/{{book.id}}" class="btn btn-sm btn-info">不同意</a>
               {% elif book.status == 1 %}
-                已拒绝借出,拒绝时间：{{ book.updatetime }}
+                已拒绝借出:<br>拒绝时间：<br> <font sieze = '5' color="#8b0000">{{ book.updatetime }}</font>
               {% else %}
-                已同意借出:同意时间：{{ book.updatetime }}
+                已同意借出:<br>同意时间：<br> <font sieze = '5' color="#8b0000">{{ book.updatetime }}</font>
               {% endif %}
             </div>
           {% endfor %}

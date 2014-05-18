@@ -7,7 +7,6 @@
     <!-- Bootstrap -->
     <link href="{{STATIC_URL}}css/bootstrap.min.css" rel="stylesheet">
     <link href="{{STATIC_URL}}css/extension.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{STATIC_URL}}css/jquery.mobile-1.4.1.min.css">
     <link href="{{STATIC_URL}}css/weishuku.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -17,6 +16,7 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
   </head>
+
   <body>
 
     <div class="container">
@@ -41,17 +41,17 @@
                 <li><a href="{% url 'book:borrowed' %}">借到的书</a></li>
                 <li><a href="{% url 'book:apply' %}">收到的申请</a></li>
                 <li><a href="{% url 'book:history' %}">借阅历史</a></li>
-                <li><a href="#">关注的书</a></li>
+                <li><a href="javascript:notice();">关注的书</a></li>
                 <li class="divider"></li>
               </ul>
             </li>
 
             <li class="dropdown">
-              <a href="#" >小组</a>
+              <a href="javascript:notice();" >小组</a>
             </li>
 
             <li>
-              <a href="{% url 'activity:index' %}">活动</b></a>
+              <a href="javascript:notice();">活动</a>
             </li>
 
           </ul>
@@ -82,6 +82,11 @@
     <script src="{{STATIC_URL}}js/jquery-1.10.2.min.js"></script>
     <script src="{{STATIC_URL}}js/bootstrap.min.js"></script>
 	<!--<script src="{{STATIC_URL}}js/jquery.mobile-1.4.1.min.js"></script>-->
-
+    <script type="text/javascript">
+        function notice()
+        {
+            alert('敬请期待')
+        }
+    </script>
   </body>
 </html>
