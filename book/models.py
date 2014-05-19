@@ -16,10 +16,13 @@ class Book(models.Model):
     updated_date = models.DateTimeField(null=True, blank=True)
     borrowdate = models.DateTimeField(null=True, blank=True)
     author = models.CharField(max_length=128L, blank=True)
+    authorinfo = models.CharField(max_length=1024L, null=True, blank=True)
+    catelog = models.CharField(max_length=4096L, null=True, blank=True)
     pubdate = models.CharField(max_length=45L, blank=True)
     ispublic = models.IntegerField(null=True, db_column='isPublic', blank=True) # Field name made lowercase.
     imgurl = models.CharField(max_length=128L, db_column='ImgURL', blank=True) # Field name made lowercase.
     city = models.IntegerField()
+    status = models.IntegerField()
     bookcount = models.IntegerField()
     class Meta:
         db_table = 'Book'
@@ -37,6 +40,8 @@ class Borrowrel(models.Model):
     createdate = models.DateTimeField(db_column='CreateDate') # Field name made lowercase.
     deldate = models.DateTimeField(db_column='DelDate') # Field name made lowercase.
     messageid = models.IntegerField(db_column='MessageID') # Field name made lowercase.
+    agreedate = models.DateTimeField(db_column='AgreeDate', blank=True, null=True) # Field name made lowercase.
+    updatedate = models.DateTimeField(db_column='UpdateDate', blank=True, null=True) # Field name made lowercase.
     class Meta:
         db_table = 'BorrowRel'
 

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 from django.shortcuts import render, redirect
@@ -31,33 +32,101 @@ def book_list(request):
     return HttpResponse(json.dumps(book_list), content_type="application/json")
 
 @login_required
-def library(request):
+def library_page(request, page):
     context = dict()
-    q = Book.objects.filter(ownerid=request.user.id)
+    # sortfield = ('status')
+    q = Book.objects.filter(ownerid=request.user.id).order_by('-status')
     book_list = [item for item in q]
 
-    borrow_list = list()
-    for rel in Borrowrel.objects.filter(borrower=request.user.id):
-        book = Book.objects.filter(id=rel.bookid)[0]
-        book.status = rel.status
-        borrow_list.append(book)
 
-    return_list = list()
-    for rel in Borrowrel.objects.filter(owner=request.user.id):
-        book = Book.objects.filter(id=rel.bookid)[0]
-        book.status = rel.status
-        return_list.append(book)
-
-    context['book_list'] = book_list
     context['is_login'] = request.user.is_authenticated()
     context['username'] = request.user.username
     context['msg_num'] = Message.objects.filter(targetid=request.user.id, status=0).count()
     context['book_num'] = len(book_list)
-    context['borrow_num'] = len(borrow_list)
-    context['return_num'] = len(return_list)
-    context['return_list'] = return_list
-    context['borrow_list'] = borrow_list
+    book_list = Paginator(book_list, 3)
+    context['book_list'] = book_list.page(int(page))
     return render(request, 'book/library.html', context)
+
+def library(request):
+    return library_page(request, 1)
+
+
+@login_required
+def library_borrowed(request, page):
+    context = dict()
+    borrow_list = list()
+    for rel in Borrowrel.objects.filter(borrower=request.user.id).exclude(status=4):
+        book = Book.objects.filter(id=rel.bookid)[0]
+        book.status = rel.status
+        name = User.objects.filter(id=book.ownerid)[0].username
+        # dpers = [d for d in Dper.objects.filter(id=book.ownerid)]
+        book.username = name
+        book.createtime = rel.createdate
+        # print book.createtime
+        book.updatetime = rel.updatedate
+        book.agreetime = rel.agreedate
+        borrow_list.append(book)
+    context['username'] = request.user.username
+    context['is_login'] = request.user.is_authenticated()
+    context['msg_num'] = Message.objects.filter(targetid=request.user.id, status=0).count()
+    context['borrow_num'] = len(borrow_list)
+    borrow_list = Paginator(borrow_list, 3)
+    context['borrow_list'] = borrow_list.page(int(page))
+    return render(request, 'book/borrowed.html', context)
+
+@login_required
+def borrowed(request):
+    return library_borrowed(request, 1)
+
+
+def libray_applied(request, page):
+    context = dict()
+    apply_list = list()
+    for rel in Borrowrel.objects.filter(owner=request.user.id):
+        book = Book.objects.filter(id=rel.bookid)[0]
+        book.status = rel.status
+        name = User.objects.filter(id=book.ownerid)[0].username
+        book.username = name
+        book.createtime = rel.createdate
+        book.updatetime = rel.updatedate
+        apply_list.append(book)
+    context['username'] = request.user.username
+    context['is_login'] = request.user.is_authenticated()
+    context['msg_num'] = Message.objects.filter(targetid=request.user.id, status=0).count()
+    context['apply_num'] = len(apply_list)
+    apply_list = Paginator(apply_list, 3)
+    context['apply_list'] = apply_list.page(int(page))
+
+    return render(request, 'book/apply.html', context)
+
+@login_required
+def apply(request):
+    return libray_applied(request, 1)
+
+@login_required
+def history_page(request, page):
+    context = dict()
+    history_list = list()
+    for rel in Borrowrel.objects.filter(borrower=request.user.id):
+        book = Book.objects.filter(id=rel.bookid)[0]
+        book.status = rel.status
+        name = User.objects.filter(id=book.ownerid)[0].username
+        book.username = name
+        book.createtime = rel.createdate
+        book.agreetime = rel.agreedate
+        book.updatetime = rel.updatedate
+        history_list.append(book)
+    context['username'] = request.user.username
+    context['is_login'] = request.user.is_authenticated()
+    context['msg_num'] = Message.objects.filter(targetid=request.user.id, status=0).count()
+    context['history_num'] = len(history_list)
+    history_list = Paginator(history_list, 3)
+    context['history_list'] = history_list.page(int(page))
+    return render(request, 'book/history.html', context)
+
+@login_required
+def history(request):
+    return history_page(request, 1)
 
 @login_required
 def add_book(request):
@@ -84,10 +153,13 @@ def add_book(request):
             book.created_date = datetime.datetime.now()
             book.updated_date = datetime.datetime.now()
             book.author = context['author'][0]
+            book.authorinfo = context['author_intro']
+            # print book.authorinfo
+            book.catelog = context['catalog']
             book.pubdate = context['pubdate']
             book.ispublic = int(True)
             book.imgurl = context['images']
-            book.city = 1
+            book.city = Dper.objects.get(user_id=request.user.id).city
             book.bookcount =1
             #Dper.objects.filter(id=request.user.id)[0].city
             book.save()
@@ -114,6 +186,9 @@ def info_book(request, id):
     if request.user.is_authenticated():
         context['username'] = request.user.username
     book = Book.objects.filter(id=id)[0]
+    print book.authorinfo
+    if len(book.url) > 0:
+        book.douurl = "http://book.douban.com/subject/"+book.url.split('/')[-1]
     context['book'] = book
     context['userid'] = request.user.id
     context['is_own'] = (book.ownerid == request.user.id)
@@ -124,9 +199,37 @@ def info_book(request, id):
     return render(request, 'book/detail.html', context)
 
 @login_required
-def del_book(request):
-    pass
-    
+def del_book(request, bookid):
+    context = dict()
+    userid = request.user.id
+    Book.objects.filter(ownerid=userid, id=bookid).update(status=0)
+    return render(request, 'book/library.html', context)
+
+@login_required
+def del_all(request):
+    context = dict()
+    userid = request.user.id
+    delcount = Book.objects.filter(ownerid=userid).update(status=0)
+    context['delcount'] = delcount
+    # print delcount
+    return render(request, 'book/library.html', context)
+
+@login_required
+def recover_book(request, bookid):
+    context = dict()
+    userid = request.user.id
+    Book.objects.filter(ownerid=userid, id=bookid, status=0).update(status=1)
+    return render(request, 'book/library.html', context)
+
+@login_required
+def recover_all(request):
+    context = dict()
+    userid = request.user.id
+    recover = Book.objects.filter(ownerid=userid, status=0).update(status=1)
+    context['recover'] = recover
+    # print recover
+    return render(request, 'book/library.html', context)
+
 @login_required
 def update_book(request):
     pass
@@ -144,7 +247,7 @@ def borrow_book(request):
         msg.status = 0
         msg.createdate = datetime.datetime.now()
         msg.content = request.POST['message'] 
-        msg.handler = '/book/library/'
+        msg.handler = '/book/apply/'
         msg.save()
 
         rel = Borrowrel()
@@ -152,24 +255,28 @@ def borrow_book(request):
         rel.owner = ownerid
         rel.borrower = borrower
         rel.createdate = datetime.datetime.now()
+        rel.updatedate = datetime.datetime.now()
         rel.status = 0
         rel.messageid = msg.id
         rel.save()
-        return redirect('/book/library/')
+        return redirect('/book/borrowed/')
 
 @login_required
 def approve_borrow(request, bookid):
     rel = Borrowrel.objects.filter(bookid=bookid)[0]
     rel.status = 2
+    rel.agreedate = datetime.datetime.now()
+    rel.updatedate = datetime.datetime.now()
     rel.save()
-    return redirect('/book/library/')
+    return redirect('/book/apply/')
 
 @login_required
 def refuse_borrow(request, bookid):
     rel = Borrowrel.objects.filter(bookid=bookid)[0]
+    rel.updatedate = datetime.datetime.now()
     rel.status = 1
     rel.save()
-    return redirect('/book/library/')
+    return redirect('/book/apply/')
 
 
 @login_required
@@ -178,9 +285,11 @@ def return_book(request, id):
     context['is_login'] = request.user.is_authenticated()
     if request.user.is_authenticated():
         context['username'] = request.user.username
-    q = Borrowrel.objects.filter(bookid=id, borrower=request.user.id)    
-    q[0].delete()
-    return redirect('/book/library/')
+    q = Borrowrel.objects.filter(bookid=id, borrower=request.user.id)[0]
+    q.status = 4
+    q.updatedate = datetime.datetime.now()
+    q.save()
+    return redirect('/book/borrowed/')
 
 
 

@@ -58,7 +58,7 @@ class City(models.Model):
 
 
     def all_cities(self):
-        q = City.objects.values('cityid', 'cityname')
+        q = City.objects.filter(citylevel__in=[1,2,3]).values('cityid', 'cityname')
         r_list = list()
         for r in q:
             r_list.append((r['cityid'], r['cityname']))
@@ -72,3 +72,15 @@ class CityArea(object):
         if id in self.area_d:
             return self.area_d[id]
         return '其它地区'
+
+    def convert_city_name(self, city_en_name):
+        q_list = [item for item in City.objects.filter(cityenname=city_en_name)]
+        if len(q_list) == 0:
+            return '上海'
+        return q_list[0].cityname
+
+    def get_city_id(self, city_en_name):
+        q_list = [item for item in City.objects.filter(cityenname=city_en_name)]
+        if len(q_list) == 0:
+            return 1
+        return q_list[0].cityid

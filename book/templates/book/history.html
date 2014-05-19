@@ -1,0 +1,63 @@
+
+{% extends 'default/base.html' %}
+{% load staticfiles %}
+{% block content %}
+        {% if history_num > 0 %}
+        <div class="col-md-8">
+          <div class="col-md-7"> <font size=5> <b>借阅历史</b> </font>  </div>
+           <div class="col-md-3">
+{#            <a href="{% url 'book:addbook' %}" class="btn btn-sm btn-info"  role="button">去催书》#}
+              <font size="5" >共计：</font> <font size='4' color="#dc143c">{{  history_num }}</font>
+          </div>
+          <div class="col-md-12"> <hr/></div>
+
+          {% for book in history_list %}
+            <div class="col-md-3 libray_book">
+              <a href="/book/{{ book.id }}">
+                <img src="{{book.imgurl}}" class="img-polaroid book_img"> </img>
+                <h4>{{ book.title }} </h4>
+              </a>
+              <div>
+                    拥有者：<font size="5" color="#8b0000">{{ book.username }} </font><br>
+                    申请时间：<br> <font sieze = '5' color="#8b0000">{{ book.createtime }} </font><br>
+              {% if book.status == 0 %}
+                <a href="#" class="btn btn-sm btn-info"  role="button">等待消息</a>
+              {% elif book.status == 1 %}
+                <a href=#" class="btn btn-sm btn-info"  role="button">拒借</a>
+                拒绝时间：<br> <font sieze = '5' color="#8b0000">{{ book.updatetime }} </font>
+              {% elif book.status == 2 %}
+                <a href="#" class="btn btn-sm btn-info"  role="button">借阅成功</a>
+                同意时间：<br> <font sieze = '5' color="#8b0000">{{ book.agreetime }} </font>
+              {% elif book.status == 4 %}
+                同意时间：<br> <font sieze = '5' color="#8b0000">{{ book.agreetime }} </font>
+                归还时间：<br> <font sieze = '5' color="#8b0000">{{ book.updatetime }} </font>
+                <a href="#" class="btn btn-sm btn-info"  role="button">已经归还</a>
+
+              {% else %}
+                <a href="#" class="btn btn-sm btn-info"  role="button">丢了</a>
+              {% endif %}
+              </div>
+              <br>
+
+            </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+            <div id="pagination" class="pagination col-md-9">
+                <span class="step-links">
+                    {% if history_list.has_previous %}
+                        <a href="/book/history/page/{{ history_list.previous_page_number }}/">previous</a>
+                    {% endif %}
+
+                    <span class="current">
+                        Page {{ history_list.number }} of {{ history_list.paginator.num_pages }}.
+                    </span>
+
+                    {% if history_list.has_next %}
+                        <a href="/book/history/page/{{ history_list.next_page_number }}/">next</a>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+{% endblock %}
+

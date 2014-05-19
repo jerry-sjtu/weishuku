@@ -11,5 +11,6 @@ urlpatterns = patterns('',
     url(r'^member/', include('member.urls', namespace='member')),
     url(r'^message/', include('message.urls', namespace='message')),
     url(r'^activity/', include('activity.urls', namespace='activity')),
-    url(r'^admin/', include(admin.site.urls)),
+    #url(r'^admin/', include(admin.site.urls)),
+    url(r'^[a-z]+/', include('default.urls', namespace='default')),
 )
