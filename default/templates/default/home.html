@@ -2,6 +2,14 @@
 {% extends 'default/base.html' %}
 {% load staticfiles %}
 {% block content %}
+
+     <div>
+         <div style="margin-bottom: 10px;">
+              <button type="button" class="btn btn-primary" onclick="choosecity()">{{ city_name }}<b class="caret"></b></button>
+         </div>
+         <div id="draggable" class="col-md-3 ui-widget-content" style="position:absolute;z-index:10;"></div>
+     </div>
+
     <script type="application/javascript">
         function searchKeyword()
         {
@@ -14,6 +22,25 @@
                 }
             });
         }
+    </script>
+    <script type="application/javascript">
+        function choosecity()
+        {
+            if ($('#draggable').text() == '')
+            {
+                $.ajax({
+                    type: 'GET',
+                    url: "/member/city_list/",
+                    success: function(r){
+                        $("#draggable").html(r);
+                    }
+                });
+            }
+            else{
+                $("#draggable").empty();
+            }
+        }
+        $( "#draggable" ).draggable();
     </script>
       <div class="jumbotron">
         <big>心在远方，书在身边</big>

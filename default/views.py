@@ -14,13 +14,13 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 def index_page(request, page):
     context = dict()
     #get the city name
-    if request.user != None:
+    if request.user.id != None:
         context['city_id'] = Dper.objects.get(user_id=request.user.id).city
         context['city_name'] = City.objects.get(cityid=context['city_id']).cityname
 
     flag = False
     if request.path == None or len(request.path) == 1:
-        if request.user == None:
+        if request.user.id == None:
             city_en_name = "shanghai"
             flag = True
     else:
