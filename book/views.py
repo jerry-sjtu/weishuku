@@ -70,7 +70,7 @@ def library_borrowed(request, page):
     context['is_login'] = request.user.is_authenticated()
     context['msg_num'] = Message.objects.filter(targetid=request.user.id, status=0).count()
     context['borrow_num'] = len(borrow_list)
-    borrow_list = Paginator(borrow_list, 3)
+    borrow_list = Paginator(borrow_list, 6)
     context['borrow_list'] = borrow_list.page(int(page))
     return render(request, 'book/borrowed.html', context)
 
@@ -95,7 +95,7 @@ def libray_applied(request, page):
     context['is_login'] = request.user.is_authenticated()
     context['msg_num'] = Message.objects.filter(targetid=request.user.id, status=0).count()
     context['apply_num'] = len(apply_list)
-    apply_list = Paginator(apply_list, 3)
+    apply_list = Paginator(apply_list, 6)
     context['apply_list'] = apply_list.page(int(page))
 
     return render(request, 'book/apply.html', context)
@@ -121,7 +121,7 @@ def history_page(request, page):
     context['is_login'] = request.user.is_authenticated()
     context['msg_num'] = Message.objects.filter(targetid=request.user.id, status=0).count()
     context['history_num'] = len(history_list)
-    history_list = Paginator(history_list, 3)
+    history_list = Paginator(history_list, 6)
     context['history_list'] = history_list.page(int(page))
     return render(request, 'book/history.html', context)
 

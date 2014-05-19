@@ -65,9 +65,9 @@
                     <a href="/book/{{ book.id }}">
                         <img src="{{book.imgurl}}" class="img-polaroid book_img">
                         <h4>{{ book.title }}</h4>
-                        <h5>拥有者:{{ book.username }}</h5>
-                        <h5>位置:{{ book.position }}</h5>
                     </a>
+                    <font size="2"> 拥有者:</font><font size="4" color="#8b0000">{{ book.username }}</font><br>
+                    <font size="2"> 位置:</font><font size="4" color="#8b0000">{{ book.position }}</font>
                 </div>
                 {% endfor %}
             </ul>
