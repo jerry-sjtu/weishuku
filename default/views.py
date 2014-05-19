@@ -49,7 +49,7 @@ def index_page(request, page):
             department = dpers[0].department
         b.username = name
         b.position = department
-    book_list = Paginator(book_list, 3)
+    book_list = Paginator(book_list, 6)
     context['book_list'] = book_list.page(int(page))
     return render(request, 'default/home.html', context)
 
