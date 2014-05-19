@@ -159,7 +159,7 @@ def add_book(request):
             book.pubdate = context['pubdate']
             book.ispublic = int(True)
             book.imgurl = context['images']
-            book.city = 1
+            book.city = Dper.objects.get(user_id=request.user.id).city
             book.bookcount =1
             #Dper.objects.filter(id=request.user.id)[0].city
             book.save()
