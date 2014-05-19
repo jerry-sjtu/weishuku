@@ -88,6 +88,7 @@ def libray_applied(request, page):
         name = User.objects.filter(id=book.ownerid)[0].username
         book.username = name
         book.createtime = rel.createdate
+        book.agreetime = rel.agreedate
         book.updatetime = rel.updatedate
         apply_list.append(book)
     context['username'] = request.user.username
