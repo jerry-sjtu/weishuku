@@ -44,7 +44,6 @@
                 <li><a href="javascript:notice();">关注的书</a></li>
                 <li class="divider"></li>
               </ul>
-            </li>
 
             <li class="dropdown">
               <a href="javascript:notice();" >小组</a>
@@ -68,6 +67,14 @@
         </div><!--/.nav-collapse -->
       </div>
 
+     <div>
+         <div style="margin-bottom: 10px;">
+              <button type="button" class="btn btn-primary" onclick="choosecity()">{{ city_name }}<b class="caret"></b></button>
+         </div>
+         <div id="draggable" class="col-md-3 ui-widget-content" style="position:absolute;z-index:10;"></div>
+     </div>
+
+
         <div>
           {% block content %} {% endblock %}
         </div>
@@ -81,12 +88,32 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="{{STATIC_URL}}js/jquery-1.10.2.min.js"></script>
     <script src="{{STATIC_URL}}js/bootstrap.min.js"></script>
+    <script src="{{STATIC_URL}}js/jquery-ui-1.10.4.js"></script>
 	<!--<script src="{{STATIC_URL}}js/jquery.mobile-1.4.1.min.js"></script>-->
     <script type="text/javascript">
         function notice()
         {
             alert('敬请期待')
         }
+    </script>
+    <script type="application/javascript">
+        function choosecity()
+        {
+            if ($('#draggable').text() == '')
+            {
+                $.ajax({
+                    type: 'GET',
+                    url: "/member/city_list/",
+                    success: function(r){
+                        $("#draggable").html(r);
+                    }
+                });
+            }
+            else{
+                $("#draggable").empty();
+            }
+        }
+        $( "#draggable" ).draggable();
     </script>
   </body>
 </html>

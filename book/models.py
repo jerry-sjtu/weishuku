@@ -45,13 +45,3 @@ class Borrowrel(models.Model):
     class Meta:
         db_table = 'BorrowRel'
 
-class City(models.Model):
-    cityid = models.IntegerField(db_column='CityID', primary_key=True) # Field name made lowercase.
-    cityname = models.CharField(db_column='CityName', max_length=45, blank=True) # Field name made lowercase.
-    cityenname = models.CharField(db_column='CityEnName', max_length=45, blank=True) # Field name made lowercase.
-    cityabbrcode = models.CharField(db_column='CityAbbrCode', max_length=45, blank=True) # Field name made lowercase.
-    newcityabbrcode = models.CharField(db_column='NewCityAbbrCode', max_length=45, blank=True) # Field name made lowercase.
-    cityareacode = models.CharField(db_column='CityAreaCode', max_length=45, blank=True) # Field name made lowercase.
-    class Meta:
-        managed = False
-        db_table = 'City'

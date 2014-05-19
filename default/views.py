@@ -5,17 +5,23 @@ from django.shortcuts import render
 import json
 import urllib2
 from book.models import Book
-from member.models import Dper
+from member.models import Dper, CityArea
 from tag.models import Tag
 from message.models import Message
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 def index_page(request, page):
     context = dict()
-    #tag_data = json.load(urllib2.urlopen('http://192.168.8.103:27080/weishuku/booktag/_find'))
-    #tag_list = list()
-    #for item in tag_data['results']:
-    #    tag_list.append(item['name'])
+    #get the city name
+    if request.path == None or len(request.path) == 1:
+        city_en_name = "shanghai"
+    city_en_name = request.path[1:-1]
+    area_obj = CityArea()
+    city_name = area_obj.convert_city_name(city_en_name)
+    context['city_name'] = city_name
+
+    print city_en_name
     context['tag_list'] = [tag for tag in Tag.objects.all()][0:10]
     is_login = request.user.is_authenticated()
     context['is_login'] = is_login
