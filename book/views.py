@@ -318,6 +318,6 @@ def format_book_list(book_list):
     html_list = ""
     for book in book_list:
         user = User.objects.filter(id=book.ownerid)
-        dper = Dper.objects.filter(id=book.ownerid)
+        dper = Dper.objects.filter(user_id=book.ownerid)
         html_list += base_html % (book.id, book.imgurl, book.title, user[0].username, dper[0].department)
     return html_list
