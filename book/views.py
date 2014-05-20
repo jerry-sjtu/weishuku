@@ -154,14 +154,15 @@ def add_book(request):
             book.created_date = datetime.datetime.now()
             book.updated_date = datetime.datetime.now()
             book.author = context['author'][0]
-            book.authorinfo = context['author_intro']
+            book.authorinfo = context['author_intro'][0:4090]
             # print book.authorinfo
-            book.catelog = context['catalog']
+            book.catelog = context['catalog'][0:4090]
             book.pubdate = context['pubdate']
             book.ispublic = int(True)
             book.imgurl = context['images']
             book.city = Dper.objects.get(user_id=request.user.id).city
             book.bookcount =1
+            book.status = 1
             #Dper.objects.filter(id=request.user.id)[0].city
             book.save()
 
