@@ -14,3 +14,6 @@ urlpatterns = patterns('',
     #url(r'^admin/', include(admin.site.urls)),
     url(r'^[a-z]+/', include('default.urls', namespace='default')),
 )
+
+handler404 = 'default.views.error'
+handler500 = 'default.views.error'
