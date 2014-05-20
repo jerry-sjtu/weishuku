@@ -197,7 +197,6 @@ def info_book(request, id):
     if request.user.is_authenticated():
         context['username'] = request.user.username
     book = Book.objects.filter(id=id)[0]
-    print book.authorinfo
     if len(book.url) > 0:
         book.douurl = "http://book.douban.com/subject/"+book.url.split('/')[-1]
     context['book'] = book
