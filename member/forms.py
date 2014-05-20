@@ -6,7 +6,7 @@ from member.models import City
 
 
 def is_email(email):
-    p = re.compile('[a-z0-9A-Z_]+@[a-z0-9]+\.com')
+    p = re.compile('[a-z0-9A-Z_\.]+@[a-z0-9]+\.com')
     return p.match(email) != None
 
 def validate_user(username):
