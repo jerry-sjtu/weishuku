@@ -57,3 +57,6 @@ def index_page(request, page):
 
 def index(request):
     return index_page(request, 1)
+
+def error(request):
+    return render(request, 'default/error.html', dict())
