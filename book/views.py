@@ -36,8 +36,11 @@ def library_page(request, page):
     context = dict()
     # sortfield = ('status')
     q = Book.objects.filter(ownerid=request.user.id).order_by('-status')
-    book_list = [item for item in q]
-
+    book_list = list()
+    for b in q:
+        if len(b.title) > 12:
+            b.title = b.title[0:12] + '...'
+        book_list.append(b)
 
     context['is_login'] = request.user.is_authenticated()
     context['username'] = request.user.username
@@ -58,6 +61,8 @@ def library_borrowed(request, page):
     for rel in Borrowrel.objects.filter(borrower=request.user.id).exclude(status=4):
         book = Book.objects.filter(id=rel.bookid)[0]
         book.status = rel.status
+        if len(book.title) > 12:
+            book.title = book.title[0:12] + '...'
         name = User.objects.filter(id=book.ownerid)[0].username
         # dpers = [d for d in Dper.objects.filter(id=book.ownerid)]
         book.username = name
@@ -84,6 +89,8 @@ def libray_applied(request, page):
     apply_list = list()
     for rel in Borrowrel.objects.filter(owner=request.user.id):
         book = Book.objects.filter(id=rel.bookid)[0]
+        if len(book.title) > 12:
+            book.title = book.title[0:12] + '...'
         book.status = rel.status
         name = User.objects.filter(id=book.ownerid)[0].username
         book.username = name
@@ -116,6 +123,8 @@ def history_page(request, page):
         book.createtime = rel.createdate
         book.agreetime = rel.agreedate
         book.updatetime = rel.updatedate
+        if len(book.title) > 12:
+            book.title = book.title[0:12] + '...'
         history_list.append(book)
     context['username'] = request.user.username
     context['is_login'] = request.user.is_authenticated()

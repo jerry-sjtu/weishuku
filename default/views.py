@@ -42,6 +42,8 @@ def index_page(request, page):
 
     book_list = [book for book in Book.objects.filter(city=context['city_id'])]
     for b in book_list:
+        if len(b.title) > 12:    
+            b.title = b.title[0:12] + '...'
         name = User.objects.filter(id=b.ownerid)[0].username
         dpers = [d for d in Dper.objects.filter(user_id=b.ownerid)]
         department = ''
