@@ -3,7 +3,7 @@
 {% load staticfiles %}
 {% block content %}
         <form action="/book/addbook/" method="post" class="form-signin"> {% csrf_token %}
-          <input id="url" name="url" class="span2" type="text" maxlength="200" style="width:550px;height:50px;"  placeholder="输入书的ISBN">
+          <input id="url" name="url" class="span2" type="text" maxlength="200" style="width:550px;height:50px;"  placeholder="输入书的ISBN" autofocus>
           <a class="btn btn-lg btn-primary" style="line-height: 1.5;"  role="button" onclick="$(this).closest('form').submit()">解析</a>
         </form>
 {% if hasbook %}

@@ -56,10 +56,10 @@
         </p>
       </div>
 
-        <div class="col-md-10">
+      <div class="row">
         <div class="col-md-10">
             <h2>图书广场</h2>
-            <ul id="book_list" data-role="listview" >
+            <div id="book_list" class="row" data-role="listview" >
                 {% for book in book_list %}
                 <div class="col-md-3 libray_book">
                     <a href="/book/{{ book.id }}">
@@ -70,7 +70,7 @@
                     <font size="2"> 位置:</font><font size="4" color="#8b0000">{{ book.position }}</font>
                 </div>
                 {% endfor %}
-            </ul>
+            </div>
         </div>
         <div id="pagination" class="pagination col-md-9">
                 <span class="step-links">
@@ -86,18 +86,19 @@
                         <a href="/page/{{ book_list.next_page_number }}">next</a>
                     {% endif %}
                 </span>
-            </div>
-        </div>
-
-        <div class="col-md-4 tags-hot">
+         </div>
+     </div>
+     <div class="row">
+         <div class="col-md-10">
           <h2>热门标签</h2>
           {% for item in tag_list %}
            <div style="float: left;margin: 2px 2px 3px 4px">
             <a class="btn btn-sm btn-primary" style="line-height: 1.5;"  role="button" href="/tag/tb/{{ item.id}}">{{ item.value }} </a>
            </div>
           {% endfor %}
-       </div>
+        </div>
       </div>
+
 
 {% endblock %}
 
